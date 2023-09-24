@@ -1,0 +1,24 @@
+{
+  "name": "community-project",
+  "version": "1.0.0",
+  "description": "This is an community project based on typescript",
+  "main": "",
+  "scripts": {
+    "start": "node build/app.js",
+    "dev": "nodemon src/app.js",
+    "build": "tsc",
+    "prestart": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "mongodb": "^6.1.0",
+    "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.18"
+  }
+}
