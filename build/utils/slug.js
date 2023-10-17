@@ -9,25 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDatabase = exports.connectToDatabase = void 0;
-const mongodb_1 = require("mongodb");
-const mongoURI = 'mongodb://0.0.0.0:27017/community';
-const client = new mongodb_1.MongoClient(mongoURI);
-let db = null;
-function connectToDatabase() {
+exports.generateUniqueSlug = void 0;
+function generateSlug(name) {
+    return name
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+}
+function generateUniqueSlug(db, name) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield client.connect();
-            db = client.db();
-            console.log("Database connected...");
-        }
-        catch (error) {
-            console.log("Error in database connection : ", error);
+        const tempSlug = generateSlug(name);
+        let slug = tempSlug;
+        let count = 1;
+        const communities = db.collection('Community');
+        while (true) {
+            const existingCommunity = yield communities.findOne({ tempSlug });
+            if (!existingCommunity) {
+                return tempSlug;
+            }
+            slug = `${tempSlug}-${count}`;
+            count++;
         }
     });
 }
-exports.connectToDatabase = connectToDatabase;
-function getDatabase() {
-    return db;
-}
-exports.getDatabase = getDatabase;
+exports.generateUniqueSlug = generateUniqueSlug;

@@ -1,5 +1,5 @@
 import { MongoClient , Db } from 'mongodb';
-const mongoURI = 'mongodb://0.0.0.0:27017';
+const mongoURI = 'mongodb://0.0.0.0:27017/community';
 
 const  client = new MongoClient(mongoURI);
 
@@ -13,4 +13,8 @@ export async function connectToDatabase(){
     } catch (error) {
         console.log("Error in database connection : ",error);
     }
+}
+
+export function getDatabase(): Db | null{
+    return db;
 }
