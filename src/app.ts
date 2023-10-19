@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import { connectToDatabase } from './config/db';
 
 import authRoutes from './routes/Auth.Routes';
+import communityRoutes from './routes/Community.Routes';
+
 const app = express();
 
 // swagger
@@ -17,6 +19,7 @@ connectToDatabase();
 
 // router
 app.use('/v1/auth', authRoutes);
+app.use('/v1/community',communityRoutes);
 
 
 app.use('/swagger',swaggerUi.serve,swaggerUi.setup(swaggerDocument));

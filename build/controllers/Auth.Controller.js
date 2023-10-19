@@ -100,7 +100,7 @@ const authController = {
     },
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = req.body;
+            let user = req.body;
             const db = (0, db_1.getDatabase)();
             if (!db) {
                 return res.status(500).json({
@@ -110,6 +110,7 @@ const authController = {
             }
             const userCollection = db.collection('users');
             const checkIfUserExists = yield userCollection.findOne({ email: user.email });
+            // console.log(checkIfUserExists);
             if (!checkIfUserExists) {
                 return res.status(400).json({
                     success: false,
@@ -123,6 +124,13 @@ const authController = {
                     error: 'Password is wrong'
                 });
             }
+            user = {
+                id: checkIfUserExists.id,
+                name: checkIfUserExists.name,
+                email: checkIfUserExists.email,
+                created_at: checkIfUserExists.created_at,
+                password: user.password
+            };
             const access_token = (0, jwt_1.generateJWT)(user);
             return res.status(200).json({
                 status: true,

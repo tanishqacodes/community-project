@@ -67,7 +67,7 @@ const authController = {
     },
 
     async login(req: Request, res: Response) {
-        const user: User = req.body;
+        let user: User = req.body;
         const db = getDatabase();
         if (!db) {
             return res.status(500).json({
@@ -77,6 +77,7 @@ const authController = {
         }
         const userCollection = db.collection('users');
         const checkIfUserExists = await userCollection.findOne({ email: user.email });
+        // console.log(checkIfUserExists);
         if (!checkIfUserExists) {
             return res.status(400).json({
                 success: false,
@@ -90,6 +91,14 @@ const authController = {
                 error: 'Password is wrong'
             });
         }
+        user  ={
+            id : checkIfUserExists.id,
+            name : checkIfUserExists.name,
+            email : checkIfUserExists.email,
+            created_at : checkIfUserExists.created_at,
+            password : user.password
+        };
+
         const access_token = generateJWT(user);
         return res.status(200).json({
             status: true,

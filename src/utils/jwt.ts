@@ -34,6 +34,24 @@ export const verifyJWTMiddleware = (req:any , res:any,next:any)=>{
             error : "Unauthorized"
         });
     }
+    // const decodedToken = jwt.decode(token);
+    // if(!decodedToken){
+    //     return res.status(401).json({
+    //         success : false,
+    //         error : "Unauthorized"
+    //     });
+    // }
+    // console.log("decoded token : ",decodedToken);
+    // const { id, name ,  email , created_at } = decodedToken as User;
+    // decode data to request object
+    // req.user = {
+    //     id,
+    //     name,
+    //     email,
+    //     created_at,
+    // };
+    // console.log("req.user ",req.user);
+    // token verification
     const user = verifyJWT(token);
     if(!user){
         return res.status(401).json({
@@ -42,5 +60,6 @@ export const verifyJWTMiddleware = (req:any , res:any,next:any)=>{
         });
     }
     req.user = user;
+    // console.log("user : ",user);
     next();
 }
