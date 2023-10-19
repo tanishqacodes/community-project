@@ -5,6 +5,7 @@ import { connectToDatabase } from './config/db';
 
 import authRoutes from './routes/Auth.Routes';
 import communityRoutes from './routes/Community.Routes';
+import roleRoutes from './routes/Role.Routes';
 
 const app = express();
 
@@ -20,6 +21,7 @@ connectToDatabase();
 // router
 app.use('/v1/auth', authRoutes);
 app.use('/v1/community',communityRoutes);
+app.use('/v1/role',roleRoutes);
 
 
 app.use('/swagger',swaggerUi.serve,swaggerUi.setup(swaggerDocument));

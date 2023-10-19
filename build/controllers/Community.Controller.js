@@ -43,7 +43,7 @@ const communityController = {
                 console.log("community : ", community_);
                 const result = yield communitiesCollection.insertOne(community_);
                 if (result.insertedId) {
-                    res.status(200).json({
+                    res.status(201).json({
                         status: true,
                         content: {
                             data: {
@@ -68,6 +68,6 @@ const communityController = {
                 });
             }
         });
-    }
+    },
 };
 module.exports = communityController;
