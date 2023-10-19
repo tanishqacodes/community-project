@@ -24,7 +24,7 @@ const roleController = {
                     });
                 }
                 let role_ = (0, Role_Interface_1.initalizeRole)(role.name);
-                console.log("role_ ", role_);
+                // console.log("role_ ",role_);
                 const db = (0, db_1.getDatabase)();
                 if (!db) {
                     return res.status(500).json({
@@ -66,6 +66,56 @@ const roleController = {
                 return res.status(500).json({
                     success: false,
                     error: "something went wrong"
+                });
+            }
+        });
+    },
+    getAll(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const db = (0, db_1.getDatabase)();
+                if (!db) {
+                    return res.status(500).json({
+                        success: false,
+                        error: "Database connection error",
+                    });
+                }
+                // pagination
+                const pageSize = 10;
+                const page = 1;
+                const rolesCollection = db.collection('roles');
+                const result = yield rolesCollection.find().toArray();
+                if (!result) {
+                    return res.status(500).json({
+                        success: false,
+                        error: 'Something went wrong',
+                    });
+                }
+                // give total entry
+                const total = yield rolesCollection.countDocuments();
+                res.status(200).json({
+                    success: true,
+                    content: {
+                        meta: {
+                            total,
+                            pages: Math.ceil(total / pageSize),
+                            page,
+                        },
+                        data: result.map((role) => {
+                            return {
+                                id: role.id,
+                                name: role.name,
+                                created_at: role.created_at,
+                                updated_at: role.updated_at
+                            };
+                        })
+                    }
+                });
+            }
+            catch (error) {
+                return res.status(500).json({
+                    success: false,
+                    error: "Something went wrong",
                 });
             }
         });

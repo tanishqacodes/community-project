@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.initalizeRole = exports.validateRole = void 0;
 const snowflake_1 = require("../utils/snowflake");
 const validateRole = (role) => {
-    console.log("validate role : ", role);
+    // console.log("validate role : ",role);
     if (role.name === null) {
         return ['Please enter role'];
     }
