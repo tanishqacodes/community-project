@@ -9,6 +9,7 @@ const db_1 = require("./config/db");
 const Auth_Routes_1 = __importDefault(require("./routes/Auth.Routes"));
 const Community_Routes_1 = __importDefault(require("./routes/Community.Routes"));
 const Role_Routes_1 = __importDefault(require("./routes/Role.Routes"));
+const Member_Routes_1 = __importDefault(require("./routes/Member.Routes"));
 const app = (0, express_1.default)();
 // swagger
 const swaggerUi = require('swagger-ui-express');
@@ -20,6 +21,7 @@ app.use(body_parser_1.default.json());
 app.use('/v1/auth', Auth_Routes_1.default);
 app.use('/v1/community', Community_Routes_1.default);
 app.use('/v1/role', Role_Routes_1.default);
+app.use('/v1/member', Member_Routes_1.default);
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // server
 const PORT = process.env.PORT || 3000;
